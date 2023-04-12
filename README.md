@@ -1,6 +1,7 @@
 # 🌱 Garden
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fet0and%2Fgarden%2Ftree%2Fmain)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fet0and%2Fgarden%2Ftree%2Fmain) [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https%3A%2F%2Fgithub.com%2Fet0and%2Fgarden%2Ftree%2Fmain)
+
 
 This project demonstrates how to display different 3D GLB models based on the user's geolocation, using the browser GeoLocation API and [model-viewer.js](model-viewer.dev). When the user is within a specified range of the desired location, the corresponding 3D model will load and display. The models can be viewed in both the 3D viewer and the AR mode.
 
