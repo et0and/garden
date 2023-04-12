@@ -22,7 +22,8 @@ To add more models or modify the existing ones, open the `index.html` file and u
 
 For example:
 
-`const models = [
+```
+const models = [
     {
         src: 'model-one.glb',
         latitude: 12.9715987,
@@ -35,7 +36,7 @@ For example:
         longitude: 77.5895627,
         scale: '1.5 1.5 1.5'
     }
-    // Add more models with their corresponding locations and scales here
-];`
+];
+```
 
 This project is released under the MIT License. See the LICENSE file for more information.
