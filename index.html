@@ -4,17 +4,92 @@
     <meta charset="utf-8">
     <meta description="An AR garden experience">
     <title>Garden</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <meta property="og:image" content="/og.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        model-viewer {
+            width: 100%;
+            height: 100vh;
+            background-color: transparent;
+        }
+    </style>
 </head>
 <body>
-    <model-viewer style="display: none;" alt="3D Model" ar ar-modes="webxr scene-viewer quick-look" auto-rotate camera-controls>
+    <model-viewer class="min-h-screen container mx-auto flex items-center justify-center" style="display: none;" alt="3D Model" ar ar-modes="webxr scene-viewer quick-look" auto-rotate camera-controls>
         <button slot="ar-button" style="display: none;"></button>
     </model-viewer>
-    <script src="garden.js"></script>
+    <nav class="bg-white/30 backdrop-blur-md fixed w-full bottom-0 left-0 z-10 p-4 shadow-md">
+		<div class="container mx-auto flex justify-between items-center">
+			<h2 class="text-2xl font-medium">Garden</h2>
+			<div>
+        <a href="https://tewahi.com" class="text-lg text-gray-700 mx-2 underline">Te Wāhi Auaha</a>
+			</div>
+		  </div>
+		</nav>
+    <div id="message" class="fixed inset-0 flex justify-center items-center text-xl bg-white bg-opacity-90 px-5">Checking location...</div>
+    <script>
+        const models = [
+            {
+        src: 'model-one.glb',
+        latitude: 12.9715987,
+        longitude: 77.5945627,
+        scale: '2 2 2'
+    },
+    {
+        src: 'model-two.glb',
+        latitude: 12.9655987,
+        longitude: 77.5895627,
+        scale: '1.5 1.5 1.5'
+    }
+            // Add more models with their corresponding locations here
+        ];
+
+        const distanceThreshold = 0.01; // Adjust this value based on the range (in degrees) you want to consider for displaying the model
+
+        function loadModelIfNearby(position) {
+            const currentLatitude = position.coords.latitude;
+            const currentLongitude = position.coords.longitude;
+
+            let modelLoaded = false;
+
+            for (const model of models) {
+                if (Math.abs(currentLatitude - model.latitude) <= distanceThreshold &&
+                    Math.abs(currentLongitude - model.longitude) <= distanceThreshold) {
+                    
+                    const modelViewer = document.querySelector('model-viewer');
+                    modelViewer.src = model.src;
+                    modelViewer.style.display = 'block';
+
+                    modelViewer.addEventListener('load', () => {
+                        modelViewer.activateAR();
+                    });
+
+                    modelLoaded = true;
+
+                    // Hide the message div
+                    document.getElementById('message').style.display = 'none';
+                    // Stop checking other models once a model is loaded
+                    break;
+                }
+            }
+
+            if (!modelLoaded) {
+                document.getElementById('message').innerText = 'Sorry! You are not close enough to any of the desired locations to load the 3D models.';
+            }
+        }
+
+        function error(err) {
+            console.warn(`ERROR(${err.code}): ${err.message}`);
+            document.getElementById('message').innerText = 'Error: Unable to retrieve location.';
+        }
+
+        navigator.geolocation.getCurrentPosition(loadModelIfNearby, error);
+    </script>
 </body>
 </html>
