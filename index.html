@@ -9,6 +9,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.js"></script>
+    <link rel="stylesheet" href="styles.css">
     <style>
         model-viewer {
             width: 100%;
@@ -66,7 +67,7 @@
             }
 
             if (!modelLoaded) {
-                alert('Sorry, you are not close enough to any of the desired locations to load the kaitiaki creatures.');
+                alert('Sorry, you are not close enough to any of the desired locations to load the 3D models.');
             }
         }
 
@@ -76,5 +77,6 @@
 
         navigator.geolocation.getCurrentPosition(loadModelIfNearby, error);
     </script>
+    <script src="garden.js"></script>
 </body>
 </html>
